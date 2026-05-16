@@ -556,6 +556,204 @@
       text-transform: uppercase;
     }
 
+    /* ── Settings Modal ── */
+    #settings-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 300;
+      display: flex;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    #settings-backdrop.open { opacity: 1; pointer-events: auto; }
+    .settings-sheet {
+      background: var(--bg);
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 24px;
+      padding-bottom: max(40px, var(--safe-b));
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    #settings-backdrop.open .settings-sheet { transform: translateY(0); }
+    .settings-section-title {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted);
+      padding: 20px 0 10px;
+    }
+    .day-pref-row {
+      display: flex;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .day-pref-row:last-of-type { border-bottom: none; }
+    .day-pref-name {
+      font-size: 17px;
+      flex: 1;
+    }
+    .day-type-toggle {
+      display: flex;
+      background: var(--surface);
+      border-radius: 980px;
+      padding: 2px;
+      gap: 0;
+    }
+    .day-type-btn {
+      padding: 5px 11px;
+      border-radius: 980px;
+      border: none;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      color: var(--muted);
+      transition: all 0.2s;
+      min-height: 30px;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .day-type-btn.active {
+      background: var(--bg);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .day-type-btn.active.type-lift  { color: var(--blue); }
+    .day-type-btn.active.type-cardio { color: #FF9500; }
+    .day-type-btn.active.type-rest  { color: var(--muted); }
+    .cardio-pref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding-bottom: 8px;
+    }
+    .cardio-pref-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      cursor: pointer;
+      background: var(--bg);
+      font-family: inherit;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
+      transition: all 0.2s;
+    }
+    .cardio-pref-card.selected {
+      border-color: #FF9500;
+      background: #FFF9F0;
+    }
+    .cardio-pref-icon { font-size: 24px; margin-bottom: 6px; }
+    .cardio-pref-label { font-size: 14px; font-weight: 600; color: var(--text); }
+    .cardio-pref-desc  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* ── Cardio day card accent ── */
+    .plan-day-card.type-cardio .plan-day-label { color: #FF9500; }
+    .plan-day-badge.cardio-badge {
+      background: #FF9500;
+      color: #fff;
+    }
+    .plan-day-badge.cardio-done-badge {
+      background: var(--green);
+      color: #fff;
+    }
+    .cardio-detail-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cardio-detail-row:last-of-type { border-bottom: none; }
+    .cardio-detail-icon { font-size: 22px; flex-shrink: 0; }
+    .cardio-detail-name { font-size: 15px; font-weight: 500; flex: 1; }
+    .cardio-detail-meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* ── Add Exercise / Cardio forms in Settings ── */
+    .add-custom-form {
+      display: none;
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .add-custom-form.open { display: block; }
+    .add-custom-form input, .add-custom-form select {
+      margin-bottom: 10px;
+    }
+    .add-custom-form .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    .add-custom-form .form-row input { margin-bottom: 0; }
+    .custom-ex-list {
+      margin-top: 4px;
+    }
+    .custom-ex-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+    }
+    .custom-ex-item:last-child { border-bottom: none; }
+    .custom-ex-delete {
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+    .custom-ex-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .add-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1.5px dashed var(--border);
+      border-radius: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--blue);
+      cursor: pointer;
+      margin-top: 12px;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+    }
+    .add-toggle-btn:active { background: var(--surface); }
+
+    /* ── Plan edit button ── */
+    .plan-edit-btn {
+      background: none;
+      border: none;
+      color: var(--blue);
+      font-size: 15px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     /* ── History ── */
     .hist-item {
       border: 1px solid var(--border);
@@ -683,6 +881,7 @@
 <div id="view-plan" class="view">
   <div class="screen-head">
     <div class="t-title">Plan</div>
+    <button class="plan-edit-btn" onclick="openSettings()">Edit Schedule</button>
   </div>
 
   <!-- Weekly Intention -->
@@ -691,7 +890,7 @@
     <textarea
       class="plan-intention-input"
       id="plan-intention-text"
-      placeholder="e.g. Focus on hip hinge form. Three sessions. No skipping Friday."
+      placeholder="e.g. Focus on hip hinge form. Three sessions. No skipping Saturday."
       oninput="saveIntention()"
     ></textarea>
     <div class="plan-intention-saved" id="plan-intention-saved"></div>
@@ -703,6 +902,78 @@
     <div class="plan-week-range" id="plan-week-range"></div>
   </div>
   <div id="plan-days" style="margin-top:14px"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SETTINGS MODAL
+═══════════════════════════════════════════ -->
+<div id="settings-backdrop">
+  <div class="settings-sheet">
+    <div class="picker-handle"></div>
+    <div class="t-h2" style="margin-bottom:4px">Schedule Preferences</div>
+    <p class="t-label" style="margin-bottom:4px">Set each day's workout type. Changes apply immediately to your plan.</p>
+
+    <div class="settings-section-title">Day Types</div>
+    <div id="settings-day-rows"></div>
+
+    <div class="settings-section-title">Cardio Options</div>
+    <p class="t-label" style="margin-bottom:12px">Select all cardio types you want suggested on cardio days.</p>
+    <div class="cardio-pref-grid" id="settings-cardio-grid"></div>
+
+    <!-- Add custom cardio -->
+    <button class="add-toggle-btn" onclick="toggleAddCardioForm()">
+      <span style="font-size:18px;line-height:1">+</span> Add Custom Cardio
+    </button>
+    <div class="add-custom-form" id="add-cardio-form">
+      <label class="t-micro" style="display:block;margin-bottom:6px">Cardio Name</label>
+      <input type="text" id="new-cardio-name" placeholder="e.g. Rowing Machine" style="font-family:inherit;font-size:16px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:var(--bg);color:var(--text);width:100%;outline:none;margin-bottom:10px">
+      <label class="t-micro" style="display:block;margin-bottom:6px">Target Duration (minutes)</label>
+      <input type="number" id="new-cardio-duration" placeholder="20" min="1" max="180" inputmode="numeric" style="font-family:inherit;font-size:16px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:var(--bg);color:var(--text);width:100%;outline:none;margin-bottom:12px">
+      <button class="btn btn-primary btn-full" onclick="addCustomCardio()" style="margin-bottom:0">Add Cardio</button>
+    </div>
+    <div class="custom-ex-list" id="custom-cardio-list"></div>
+
+    <div class="settings-section-title">Lift Exercises</div>
+    <p class="t-label" style="margin-bottom:12px">Add custom lifts to the exercise picker and plan templates.</p>
+
+    <!-- Add custom lift -->
+    <button class="add-toggle-btn" onclick="toggleAddLiftForm()">
+      <span style="font-size:18px;line-height:1">+</span> Add Custom Lift
+    </button>
+    <div class="add-custom-form" id="add-lift-form">
+      <label class="t-micro" style="display:block;margin-bottom:6px">Exercise Name</label>
+      <input type="text" id="new-lift-name" placeholder="e.g. Cable Pull-Through" style="font-family:inherit;font-size:16px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:var(--bg);color:var(--text);width:100%;outline:none;margin-bottom:10px">
+      <label class="t-micro" style="display:block;margin-bottom:6px">Category</label>
+      <select id="new-lift-cat" style="font-family:inherit;font-size:16px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:var(--bg);color:var(--text);width:100%;outline:none;-webkit-appearance:none;margin-bottom:10px">
+        <option value="Hip Hinge / Glute — Barbell">Hip Hinge / Glute — Barbell</option>
+        <option value="Hip Hinge / Glute — Dumbbell">Hip Hinge / Glute — Dumbbell</option>
+        <option value="Hip Hinge / Glute — Banded">Hip Hinge / Glute — Banded</option>
+        <option value="Posterior Chain — Pull-Up Bar / Bands">Posterior Chain — Pull-Up Bar</option>
+        <option value="Posterior Chain — Barbell">Posterior Chain — Barbell</option>
+        <option value="Posterior Chain — Dumbbell">Posterior Chain — Dumbbell</option>
+        <option value="Custom">Custom (new category)</option>
+      </select>
+      <div id="new-lift-cat-custom-wrap" style="display:none;margin-bottom:10px">
+        <input type="text" id="new-lift-cat-custom" placeholder="Category name" style="font-family:inherit;font-size:16px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:var(--bg);color:var(--text);width:100%;outline:none;">
+      </div>
+      <div class="form-row" style="margin-bottom:10px">
+        <div style="flex:1">
+          <label class="t-micro" style="display:block;margin-bottom:6px">Type</label>
+          <select id="new-lift-type" style="font-family:inherit;font-size:16px;border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:var(--bg);color:var(--text);width:100%;outline:none;-webkit-appearance:none;">
+            <option value="weighted">Weighted</option>
+            <option value="banded">Banded / Bodyweight</option>
+            <option value="timed">Timed (seconds)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="addCustomLift()" style="margin-bottom:0">Add Exercise</button>
+    </div>
+    <div class="custom-ex-list" id="custom-lift-list"></div>
+
+    <div style="margin-top:24px">
+      <button class="btn btn-primary btn-full" onclick="closeSettings()">Done</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -1372,94 +1643,640 @@ function clearHistory() {
 }
 
 // ============================================================
-// PLAN VIEW
+// PLAN VIEW — PREFERENCES & SCHEDULE
 // ============================================================
 
-// Weekly workout templates — 4 rotating programs
-// Each day: { label, focus[], exercises:[{name, sets, reps, note}] }
-const WEEKLY_PLANS = [
-  // Week A — Hip hinge heavy + pull strength
-  [
-    {
-      label: 'Monday',
+// Cardio options library
+const CARDIO_OPTIONS = [
+  { id: 'rebounder', icon: '🪃', label: 'Rebounder',  desc: '10–20 min rebounding', duration: 15, unit: 'min' },
+  { id: 'jogging',   icon: '🏃', label: 'Jogging',    desc: 'Outdoor run',           duration: 30, unit: 'min' },
+  { id: 'treadmill', icon: '⚡', label: 'Treadmill',  desc: 'Indoor treadmill',      duration: 30, unit: 'min' },
+  { id: 'elliptical',icon: '🔄', label: 'Elliptical', desc: 'Low-impact cardio',     duration: 25, unit: 'min' },
+];
+
+// Default schedule: lift Mon/Wed/Fri/Sat/Sun, rest Tue/Thu
+// Days: 0=Mon … 6=Sun
+const DEFAULT_SCHEDULE = ['lift','rest','lift','rest','lift','lift','lift'];
+
+// Default preferences stored in localStorage under 'lift_prefs'
+function loadPrefs() {
+  try {
+    const raw = localStorage.getItem('lift_prefs');
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    schedule: [...DEFAULT_SCHEDULE],          // ['lift'|'cardio'|'rest'] × 7, Mon–Sun
+    cardioTypes: ['rebounder','jogging'],      // which cardio options are enabled
+  };
+}
+
+function savePrefs(p) {
+  localStorage.setItem('lift_prefs', JSON.stringify(p));
+}
+
+// Workout templates per day-of-week index (Mon=0 … Sun=6)
+// Two rotating programs A/B
+const LIFT_TEMPLATES = {
+  A: {
+    0: { // Monday
       focus: ['Hip Hinge', 'Glute'],
       exercises: [
-        { name: 'Romanian Deadlift (barbell)',  sets: 3, reps: 8,  note: 'Hinge at hips, soft knee' },
-        { name: 'Hip Thrust (dumbbell)',         sets: 3, reps: 12, note: 'Full hip extension at top' },
-        { name: 'Banded Glute Kickback',         sets: 3, reps: 15, note: 'Slow & controlled' },
-        { name: 'Banded Clamshell',              sets: 3, reps: 15, note: 'Keep pelvis still' },
+        { name: 'Romanian Deadlift (barbell)', sets: 3, reps: 8,  note: 'Hinge at hips, soft knee' },
+        { name: 'Hip Thrust (dumbbell)',        sets: 3, reps: 12, note: 'Full hip extension at top' },
+        { name: 'Banded Glute Kickback',        sets: 3, reps: 15, note: 'Slow & controlled' },
+        { name: 'Banded Clamshell',             sets: 3, reps: 15, note: 'Keep pelvis still' },
       ]
     },
-    { label: 'Tuesday',  focus: ['Rest'], exercises: [] },
-    {
-      label: 'Wednesday',
+    2: { // Wednesday
       focus: ['Posterior Chain', 'Lats'],
       exercises: [
-        { name: 'Pull-Up',                       sets: 3, reps: 6,  note: 'Dead hang start each rep' },
-        { name: 'Barbell Row (overhand)',         sets: 3, reps: 8,  note: '45° torso, row to belly' },
+        { name: 'Pull-Up',                      sets: 3, reps: 6,  note: 'Dead hang start each rep' },
+        { name: 'Barbell Row (overhand)',        sets: 3, reps: 8,  note: '45° torso, row to belly' },
+        { name: 'Single-Arm Dumbbell Row',       sets: 3, reps: 10, note: 'Full stretch at bottom' },
+        { name: 'Dumbbell Rear Delt Fly',        sets: 3, reps: 12, note: 'Control the negative' },
+      ]
+    },
+    4: { // Friday
+      focus: ['Hip Hinge', 'Posterior Chain'],
+      exercises: [
+        { name: 'Good Morning (barbell)',        sets: 3, reps: 10, note: 'Brace core, push hips back' },
+        { name: 'Single-Leg RDL (dumbbell)',     sets: 3, reps: 8,  note: 'Per leg — slow tempo' },
+        { name: 'Band-Assisted Pull-Up',         sets: 3, reps: 8,  note: 'Full range of motion' },
+        { name: 'Banded Hip Thrust',             sets: 3, reps: 20, note: 'Squeeze glutes at top' },
+      ]
+    },
+    5: { // Saturday
+      focus: ['Glute', 'Back'],
+      exercises: [
+        { name: 'Hip Thrust (dumbbell)',         sets: 4, reps: 12, note: 'Pause 1s at top' },
+        { name: 'Barbell Row (underhand)',        sets: 3, reps: 8,  note: 'Underhand hits more lats' },
+        { name: 'Banded Lateral Walk',           sets: 3, reps: 20, note: '20 steps each direction' },
+        { name: 'Dumbbell Face Pull',            sets: 3, reps: 15, note: 'External rotate at end' },
+      ]
+    },
+    6: { // Sunday
+      focus: ['Full Posterior Chain'],
+      exercises: [
+        { name: 'Rack Pull (barbell)',            sets: 3, reps: 6,  note: 'Heavy — focus on lockout' },
+        { name: 'Single-Leg RDL (dumbbell)',      sets: 3, reps: 8,  note: 'Per leg' },
+        { name: 'Band-Assisted Chin-Up',          sets: 3, reps: 8,  note: 'Full range' },
+        { name: 'Banded Clamshell',               sets: 3, reps: 20, note: 'Burnout — feel the burn' },
+      ]
+    },
+  },
+  B: {
+    0: { // Monday
+      focus: ['Glute', 'Hip Hinge'],
+      exercises: [
+        { name: 'Banded Hip Thrust',             sets: 4, reps: 15, note: 'Pause 1s at top' },
+        { name: 'Romanian Deadlift (dumbbell)',  sets: 3, reps: 10, note: 'Feel the hamstring stretch' },
+        { name: 'Sumo Squat (dumbbell goblet)',  sets: 3, reps: 12, note: 'Knees track over toes' },
+        { name: 'Banded Lateral Walk',           sets: 3, reps: 20, note: '20 steps each direction' },
+      ]
+    },
+    2: { // Wednesday
+      focus: ['Back', 'Lats'],
+      exercises: [
+        { name: 'Band-Assisted Chin-Up',         sets: 3, reps: 8,  note: 'Supinated grip, elbows in' },
+        { name: 'Barbell Row (underhand)',        sets: 3, reps: 8,  note: 'Underhand hits more lats' },
+        { name: 'Dumbbell Face Pull',            sets: 3, reps: 15, note: 'External rotate at end' },
+        { name: 'Dumbbell Shrug',                sets: 3, reps: 12, note: 'Hold 1s at top' },
+      ]
+    },
+    4: { // Friday
+      focus: ['Full Posterior Chain'],
+      exercises: [
+        { name: 'Rack Pull (barbell)',            sets: 3, reps: 6,  note: 'Heavy — focus on lockout' },
+        { name: 'Single-Leg RDL (dumbbell)',      sets: 3, reps: 8,  note: 'Per leg' },
+        { name: 'Pull-Up',                        sets: 3, reps: 6,  note: 'Add weight if 6 feels easy' },
+        { name: 'Banded Clamshell',               sets: 3, reps: 20, note: 'Burnout set' },
+      ]
+    },
+    5: { // Saturday
+      focus: ['Hip Hinge', 'Glute'],
+      exercises: [
+        { name: 'Romanian Deadlift (barbell)',   sets: 3, reps: 8,  note: 'Hinge at hips, soft knee' },
+        { name: 'Banded Glute Kickback',          sets: 3, reps: 15, note: 'Slow & controlled' },
         { name: 'Single-Arm Dumbbell Row',        sets: 3, reps: 10, note: 'Full stretch at bottom' },
         { name: 'Dumbbell Rear Delt Fly',         sets: 3, reps: 12, note: 'Control the negative' },
       ]
     },
-    { label: 'Thursday', focus: ['Rest'], exercises: [] },
-    {
-      label: 'Friday',
-      focus: ['Hip Hinge', 'Posterior Chain'],
+    6: { // Sunday
+      focus: ['Posterior Chain', 'Lats'],
       exercises: [
-        { name: 'Good Morning (barbell)',         sets: 3, reps: 10, note: 'Brace core, push hips back' },
-        { name: 'Single-Leg RDL (dumbbell)',      sets: 3, reps: 8,  note: 'Per leg — slow tempo' },
-        { name: 'Band-Assisted Pull-Up',          sets: 3, reps: 8,  note: 'Full range of motion' },
-        { name: 'Banded Hip Thrust',              sets: 3, reps: 20, note: 'Squeeze glutes hard at top' },
+        { name: 'Pull-Up',                        sets: 3, reps: 6,  note: 'Dead hang start' },
+        { name: 'Good Morning (barbell)',          sets: 3, reps: 10, note: 'Brace core, hips back' },
+        { name: 'Hip Thrust (dumbbell)',           sets: 3, reps: 12, note: 'Full hip extension' },
+        { name: 'Barbell Shrug',                  sets: 3, reps: 12, note: 'Hold 1s at top' },
       ]
     },
-    { label: 'Saturday', focus: ['Rest'], exercises: [] },
-    { label: 'Sunday',   focus: ['Rest'], exercises: [] },
-  ],
-  // Week B — Volume + unilateral emphasis
-  [
-    {
-      label: 'Monday',
-      focus: ['Glute', 'Hip Hinge'],
-      exercises: [
-        { name: 'Banded Hip Thrust',              sets: 4, reps: 15, note: 'Pause 1s at top' },
-        { name: 'Romanian Deadlift (dumbbell)',   sets: 3, reps: 10, note: 'Feel the hamstring stretch' },
-        { name: 'Sumo Squat (dumbbell goblet)',   sets: 3, reps: 12, note: 'Knees track over toes' },
-        { name: 'Banded Lateral Walk',            sets: 3, reps: 20, note: '20 steps each direction' },
-      ]
-    },
-    { label: 'Tuesday',  focus: ['Rest'], exercises: [] },
-    {
-      label: 'Wednesday',
-      focus: ['Back', 'Lats'],
-      exercises: [
-        { name: 'Band-Assisted Chin-Up',          sets: 3, reps: 8,  note: 'Supinated grip, elbows in' },
-        { name: 'Barbell Row (underhand)',         sets: 3, reps: 8,  note: 'Underhand hits more lats' },
-        { name: 'Dumbbell Face Pull',             sets: 3, reps: 15, note: 'External rotate at end' },
-        { name: 'Dumbbell Shrug',                 sets: 3, reps: 12, note: 'Hold 1s at top' },
-      ]
-    },
-    { label: 'Thursday', focus: ['Rest'], exercises: [] },
-    {
-      label: 'Friday',
-      focus: ['Full Posterior Chain'],
-      exercises: [
-        { name: 'Rack Pull (barbell)',             sets: 3, reps: 6,  note: 'Heavy — focus on lockout' },
-        { name: 'Single-Leg RDL (dumbbell)',       sets: 3, reps: 8,  note: 'Per leg' },
-        { name: 'Pull-Up',                         sets: 3, reps: 6,  note: 'Add weight if 6 feels easy' },
-        { name: 'Banded Clamshell',                sets: 3, reps: 20, note: 'Burnout set — feel the burn' },
-      ]
-    },
-    { label: 'Saturday', focus: ['Rest'], exercises: [] },
-    { label: 'Sunday',   focus: ['Rest'], exercises: [] },
-  ],
-];
+  }
+};
 
-function getCurrentWeekPlan() {
-  // Rotate plan A/B based on which week of the year it is
+// For any lift day not in template, use a generic fallback
+const LIFT_FALLBACK = {
+  focus: ['Strength'],
+  exercises: [
+    { name: 'Romanian Deadlift (barbell)', sets: 3, reps: 8,  note: 'Hinge at hips, soft knee' },
+    { name: 'Pull-Up',                     sets: 3, reps: 6,  note: 'Full range' },
+    { name: 'Banded Hip Thrust',           sets: 3, reps: 15, note: 'Squeeze glutes at top' },
+    { name: 'Single-Arm Dumbbell Row',     sets: 3, reps: 10, note: 'Control the negative' },
+  ]
+};
+
+const DAY_LABELS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+function getWeekAB() {
   const weekNum = getWeekNumber(new Date());
-  return WEEKLY_PLANS[weekNum % WEEKLY_PLANS.length];
+  return weekNum % 2 === 0 ? 'A' : 'B';
 }
 
+function getLiftTemplate(dayIdx) {
+  const ab = getWeekAB();
+  return LIFT_TEMPLATES[ab][dayIdx] || LIFT_FALLBACK;
+}
+
+function getCardioForDay(prefs) {
+  const enabled = CARDIO_OPTIONS.filter(c => prefs.cardioTypes.includes(c.id));
+  return enabled.length ? enabled : [CARDIO_OPTIONS[0]];
+}
+
+// ── Settings Modal ──────────────────────────────────────────
+function openSettings() {
+  const prefs = loadPrefs();
+  // Render day rows
+  const rows = document.getElementById('settings-day-rows');
+  rows.innerHTML = '';
+  DAY_LABELS.forEach((label, i) => {
+    const current = prefs.schedule[i] || 'rest';
+    const row = document.createElement('div');
+    row.className = 'day-pref-row';
+    row.innerHTML = `
+      <span class="day-pref-name">${label}</span>
+      <div class="day-type-toggle">
+        <button class="day-type-btn type-lift ${current==='lift'?'active':''}"
+          onclick="setDayType(${i},'lift',this)">Lift</button>
+        <button class="day-type-btn type-cardio ${current==='cardio'?'active':''}"
+          onclick="setDayType(${i},'cardio',this)">Cardio</button>
+        <button class="day-type-btn type-rest ${current==='rest'?'active':''}"
+          onclick="setDayType(${i},'rest',this)">Rest</button>
+      </div>`;
+    rows.appendChild(row);
+  });
+  // Render cardio grid and custom lists
+  renderSettingsCardioGrid(prefs);
+  renderCustomCardioList();
+  renderCustomLiftList();
+  document.getElementById('settings-backdrop').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('settings-backdrop').classList.remove('open');
+  renderPlan();
+}
+
+function setDayType(dayIdx, type, btn) {
+  const prefs = loadPrefs();
+  prefs.schedule[dayIdx] = type;
+  savePrefs(prefs);
+  // Update toggle UI
+  const row = btn.closest('.day-pref-row');
+  row.querySelectorAll('.day-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleCardioType(id, card) {
+  const prefs = loadPrefs();
+  const idx = prefs.cardioTypes.indexOf(id);
+  if (idx === -1) {
+    prefs.cardioTypes.push(id);
+    card.classList.add('selected');
+  } else {
+    if (prefs.cardioTypes.length === 1) return; // keep at least one
+    prefs.cardioTypes.splice(idx, 1);
+    card.classList.remove('selected');
+  }
+  savePrefs(prefs);
+}
+
+// ── Custom Exercise / Cardio Management ─────────────────────
+
+function toggleAddLiftForm() {
+  const f = document.getElementById('add-lift-form');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) document.getElementById('new-lift-name').focus();
+}
+
+function toggleAddCardioForm() {
+  const f = document.getElementById('add-cardio-form');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) document.getElementById('new-cardio-name').focus();
+}
+
+// Show/hide custom category text input
+document.getElementById('new-lift-cat').addEventListener('change', function() {
+  document.getElementById('new-lift-cat-custom-wrap').style.display =
+    this.value === 'Custom' ? 'block' : 'none';
+});
+
+function addCustomLift() {
+  const nameEl = document.getElementById('new-lift-name');
+  const catEl  = document.getElementById('new-lift-cat');
+  const typeEl = document.getElementById('new-lift-type');
+  const custEl = document.getElementById('new-lift-cat-custom');
+
+  const name = nameEl.value.trim();
+  if (!name) { nameEl.focus(); return; }
+
+  let cat = catEl.value;
+  if (cat === 'Custom') {
+    cat = custEl.value.trim() || 'Custom Exercises';
+  }
+  const liftType = typeEl.value; // 'weighted' | 'banded' | 'timed'
+
+  const prefs = loadPrefs();
+  if (!prefs.customLifts) prefs.customLifts = [];
+
+  // Prevent duplicates
+  if (prefs.customLifts.find(l => l.name.toLowerCase() === name.toLowerCase())) {
+    nameEl.style.borderColor = 'var(--danger)';
+    setTimeout(() => nameEl.style.borderColor = '', 1500);
+    return;
+  }
+
+  prefs.customLifts.push({ name, cat, liftType });
+  savePrefs(prefs);
+
+  // Merge into live LIBRARY and sets
+  applyCustomLiftsToLibrary(prefs.customLifts);
+
+  // Reset form
+  nameEl.value = '';
+  custEl.value = '';
+  catEl.value = 'Hip Hinge / Glute — Barbell';
+  document.getElementById('new-lift-cat-custom-wrap').style.display = 'none';
+  document.getElementById('add-lift-form').classList.remove('open');
+  renderCustomLiftList();
+}
+
+function addCustomCardio() {
+  const nameEl = document.getElementById('new-cardio-name');
+  const durEl  = document.getElementById('new-cardio-duration');
+
+  const name = nameEl.value.trim();
+  if (!name) { nameEl.focus(); return; }
+  const duration = parseInt(durEl.value) || 20;
+
+  const prefs = loadPrefs();
+  if (!prefs.customCardio) prefs.customCardio = [];
+
+  if (prefs.customCardio.find(c => c.label.toLowerCase() === name.toLowerCase())) {
+    nameEl.style.borderColor = 'var(--danger)';
+    setTimeout(() => nameEl.style.borderColor = '', 1500);
+    return;
+  }
+
+  const id = 'custom_' + Date.now();
+  prefs.customCardio.push({ id, icon: '🏋️', label: name, desc: `${duration} min`, duration, unit: 'min' });
+  // Also enable it in cardioTypes
+  if (!prefs.cardioTypes.includes(id)) prefs.cardioTypes.push(id);
+  savePrefs(prefs);
+
+  applyCustomCardioToOptions(prefs.customCardio);
+
+  nameEl.value = '';
+  durEl.value  = '';
+  document.getElementById('add-cardio-form').classList.remove('open');
+  renderSettingsCardioGrid(prefs);
+  renderCustomCardioList();
+}
+
+function deleteCustomLift(name) {
+  const prefs = loadPrefs();
+  prefs.customLifts = (prefs.customLifts || []).filter(l => l.name !== name);
+  savePrefs(prefs);
+  // Rebuild library from scratch then re-apply
+  rebuildLibrary(prefs);
+  renderCustomLiftList();
+}
+
+function deleteCustomCardio(id) {
+  const prefs = loadPrefs();
+  prefs.customCardio  = (prefs.customCardio  || []).filter(c => c.id !== id);
+  prefs.cardioTypes   = (prefs.cardioTypes   || []).filter(t => t !== id);
+  if (!prefs.cardioTypes.length) prefs.cardioTypes = ['rebounder'];
+  savePrefs(prefs);
+  rebuildCardioOptions(prefs);
+  renderSettingsCardioGrid(prefs);
+  renderCustomCardioList();
+}
+
+function applyCustomLiftsToLibrary(customLifts) {
+  (customLifts || []).forEach(l => {
+    if (!LIBRARY[l.cat]) LIBRARY[l.cat] = [];
+    if (!LIBRARY[l.cat].includes(l.name)) LIBRARY[l.cat].push(l.name);
+    if (l.liftType === 'banded') BANDED.add(l.name);
+    if (l.liftType === 'timed')  TIMED.add(l.name);
+  });
+}
+
+function applyCustomCardioToOptions(customCardio) {
+  (customCardio || []).forEach(c => {
+    if (!CARDIO_OPTIONS.find(o => o.id === c.id)) CARDIO_OPTIONS.push(c);
+    TIMED.add(c.label + ' (cardio)');
+  });
+  // Keep LIBRARY['Cardio'] in sync
+  LIBRARY['Cardio'] = CARDIO_OPTIONS.map(c => c.label + ' (cardio)');
+}
+
+function rebuildLibrary(prefs) {
+  // Remove all custom category entries then re-add
+  (prefs.customLifts || []).forEach(l => {
+    if (LIBRARY[l.cat]) {
+      LIBRARY[l.cat] = LIBRARY[l.cat].filter(n => n !== l.name);
+    }
+    BANDED.delete(l.name);
+    TIMED.delete(l.name);
+  });
+  applyCustomLiftsToLibrary(prefs.customLifts || []);
+}
+
+function rebuildCardioOptions(prefs) {
+  // Remove custom entries from CARDIO_OPTIONS
+  const customIds = new Set((prefs.customCardio || []).map(c => c.id));
+  // Filter out any old custom entries no longer in prefs
+  const toRemove = CARDIO_OPTIONS.filter(c => c.id.startsWith('custom_') && !customIds.has(c.id));
+  toRemove.forEach(c => {
+    const idx = CARDIO_OPTIONS.indexOf(c);
+    if (idx !== -1) CARDIO_OPTIONS.splice(idx, 1);
+    TIMED.delete(c.label + ' (cardio)');
+  });
+  applyCustomCardioToOptions(prefs.customCardio || []);
+}
+
+function renderCustomLiftList() {
+  const prefs = loadPrefs();
+  const list  = document.getElementById('custom-lift-list');
+  const items = prefs.customLifts || [];
+  if (!items.length) { list.innerHTML = ''; return; }
+  list.innerHTML = items.map(l => `
+    <div class="custom-ex-item">
+      <div>
+        <div>${l.name}</div>
+        <div class="custom-ex-meta">${l.cat} · ${l.liftType}</div>
+      </div>
+      <button class="custom-ex-delete" onclick="deleteCustomLift(${JSON.stringify(l.name)})">×</button>
+    </div>`).join('');
+}
+
+function renderCustomCardioList() {
+  const prefs = loadPrefs();
+  const list  = document.getElementById('custom-cardio-list');
+  const items = prefs.customCardio || [];
+  if (!items.length) { list.innerHTML = ''; return; }
+  list.innerHTML = items.map(c => `
+    <div class="custom-ex-item">
+      <div>
+        <div>${c.icon} ${c.label}</div>
+        <div class="custom-ex-meta">${c.duration} min</div>
+      </div>
+      <button class="custom-ex-delete" onclick="deleteCustomCardio(${JSON.stringify(c.id)})">×</button>
+    </div>`).join('');
+}
+
+function renderSettingsCardioGrid(prefs) {
+  const grid = document.getElementById('settings-cardio-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  CARDIO_OPTIONS.forEach(c => {
+    const sel = prefs.cardioTypes.includes(c.id);
+    const card = document.createElement('button');
+    card.className = 'cardio-pref-card' + (sel ? ' selected' : '');
+    card.innerHTML = `
+      <div class="cardio-pref-icon">${c.icon}</div>
+      <div class="cardio-pref-label">${c.label}</div>
+      <div class="cardio-pref-desc">${c.desc}</div>`;
+    card.onclick = () => toggleCardioType(c.id, card);
+    grid.appendChild(card);
+  });
+}
+
+
+
+// ── Plan Rendering ──────────────────────────────────────────
+function planSuggestWeight(exName) {
+  const last = getLastSessionSets(exName);
+  if (!last) return { weight: null, basis: 'No history yet' };
+  if (TIMED.has(exName)) {
+    const secs = (last[last.length - 1].seconds || 20) + 5;
+    return { weight: null, secs, basis: `Last: ${secs - 5}s → try ${secs}s` };
+  }
+  if (BANDED.has(exName)) {
+    const reps = (last[last.length - 1].reps || 12) + 1;
+    return { weight: null, reps, basis: `Last: ${reps - 1} reps → try ${reps}` };
+  }
+  const prevW = last[0].weight || 0;
+  const allOnTarget = last.every(s => (s.reps || 0) >= TARGET_REPS);
+  const suggestW = allOnTarget ? prevW + 5 : prevW;
+  const arrow = allOnTarget ? `↑ +5 ${S.unit}` : `= same`;
+  return { weight: suggestW, basis: `Last: ${prevW} ${S.unit} · ${arrow}` };
+}
+
+function renderPlan() {
+  const prefs = loadPrefs();
+
+  // Intention
+  const intentionKey = 'lift_intention_' + getCurrentWeekKey();
+  const savedInt = localStorage.getItem(intentionKey) || '';
+  document.getElementById('plan-intention-text').value = savedInt;
+
+  // Week range label
+  const dates = getWeekDates();
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const year = dates[0].getFullYear();
+  document.getElementById('plan-week-range').textContent =
+    `${fmt(dates[0])} – ${fmt(dates[6])}, ${year}`;
+
+  const workoutDates = new Set(S.workouts.map(w => w.date));
+  const todayStr2 = todayStr();
+  const container = document.getElementById('plan-days');
+  container.innerHTML = '';
+
+  DAY_LABELS.forEach((dayLabel, i) => {
+    const dayDate = dates[i];
+    const ds = `${dayDate.getFullYear()}-${pad(dayDate.getMonth()+1)}-${pad(dayDate.getDate())}`;
+    const isToday = ds === todayStr2;
+    const isDone  = workoutDates.has(ds);
+    const dayType = prefs.schedule[i] || 'rest';
+
+    const card = document.createElement('div');
+    card.className = 'plan-day-card' + (dayType !== 'rest' ? ` type-${dayType}` : '') +
+                     (isToday && dayType !== 'rest' ? ' open' : '');
+
+    // Badge
+    let badgeHtml = '';
+    if (isDone && dayType !== 'rest') {
+      badgeHtml = `<span class="plan-day-badge done-badge">✓ Done</span>`;
+    } else if (isToday && dayType === 'lift') {
+      badgeHtml = `<span class="plan-day-badge today-badge">Today · Lift</span>`;
+    } else if (isToday && dayType === 'cardio') {
+      badgeHtml = `<span class="plan-day-badge cardio-badge">Today · Cardio</span>`;
+    } else if (isToday) {
+      badgeHtml = `<span class="plan-day-badge">Today · Rest</span>`;
+    }
+
+    // Sub-label
+    let subLabel = '';
+    if (dayType === 'rest') {
+      subLabel = 'Rest & recover';
+    } else if (dayType === 'cardio') {
+      const options = getCardioForDay(prefs);
+      subLabel = options.map(c => c.label).join(', ');
+    } else {
+      const tmpl = getLiftTemplate(i);
+      subLabel = tmpl.exercises.map(e => e.name.split('(')[0].trim()).join(', ');
+    }
+
+    card.innerHTML = `
+      <div class="plan-day-head" onclick="this.parentElement.classList.toggle('open')">
+        <div style="flex:1">
+          <div class="plan-day-label">${dayLabel} <span style="font-weight:400;color:var(--muted);font-size:15px">${fmt(dayDate)}</span></div>
+          <div class="plan-day-sub">${subLabel}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${badgeHtml}
+          ${dayType !== 'rest' ? '<span class="plan-day-chevron">›</span>' : ''}
+        </div>
+      </div>`;
+
+    if (dayType === 'lift') {
+      const tmpl = getLiftTemplate(i);
+      const body = document.createElement('div');
+      body.className = 'plan-day-body';
+
+      // Focus tags
+      const focusTags = tmpl.focus.map(f =>
+        `<span class="plan-focus-tag">${f}</span>`).join('');
+      const tagsDiv = document.createElement('div');
+      tagsDiv.style.paddingTop = '12px';
+      tagsDiv.innerHTML = focusTags;
+      body.appendChild(tagsDiv);
+
+      // Exercise rows
+      tmpl.exercises.forEach(ex => {
+        const suggestion = planSuggestWeight(ex.name);
+        const row = document.createElement('div');
+        row.className = 'plan-ex-row';
+        let suggestHtml = '';
+        if (TIMED.has(ex.name)) {
+          suggestHtml = suggestion.secs
+            ? `<div class="plan-ex-suggest">${suggestion.secs}s</div>`
+            : `<div class="plan-ex-suggest" style="color:var(--muted)">—</div>`;
+        } else if (BANDED.has(ex.name)) {
+          suggestHtml = suggestion.reps
+            ? `<div class="plan-ex-suggest">${suggestion.reps} reps</div>`
+            : `<div class="plan-ex-suggest" style="color:var(--muted)">Start easy</div>`;
+        } else {
+          suggestHtml = suggestion.weight !== null
+            ? `<div class="plan-ex-suggest">${suggestion.weight} ${S.unit}</div>`
+            : `<div class="plan-ex-suggest" style="color:var(--muted)">—</div>`;
+        }
+        row.innerHTML = `
+          <div style="flex:1">
+            <div class="plan-ex-name">${ex.name}</div>
+            <div class="plan-ex-target">${ex.sets} sets × ${ex.reps} reps${ex.note ? ' · ' + ex.note : ''}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            ${suggestHtml}
+            <div class="plan-ex-basis">${suggestion.basis}</div>
+          </div>`;
+        body.appendChild(row);
+      });
+
+      if (!isDone) {
+        const startBtn = document.createElement('button');
+        startBtn.className = 'btn btn-primary plan-start-btn';
+        startBtn.textContent = isToday ? 'Start This Workout' : 'Load This Workout';
+        startBtn.onclick = () => loadPlanWorkout(tmpl.exercises);
+        body.appendChild(startBtn);
+      } else {
+        const doneNote = document.createElement('div');
+        doneNote.className = 'plan-rest-label';
+        doneNote.textContent = '✓ Workout logged for this day';
+        body.appendChild(doneNote);
+      }
+      card.appendChild(body);
+
+    } else if (dayType === 'cardio') {
+      const options = getCardioForDay(prefs);
+      const body = document.createElement('div');
+      body.className = 'plan-day-body';
+
+      const heading = document.createElement('div');
+      heading.style.cssText = 'padding-top:12px;margin-bottom:4px';
+      heading.innerHTML = `<span class="plan-focus-tag" style="color:#FF9500;background:#FFF0DC">Cardio</span>`;
+      body.appendChild(heading);
+
+      options.forEach(c => {
+        const row = document.createElement('div');
+        row.className = 'cardio-detail-row';
+        row.innerHTML = `
+          <div class="cardio-detail-icon">${c.icon}</div>
+          <div style="flex:1">
+            <div class="cardio-detail-name">${c.label}</div>
+            <div class="cardio-detail-meta">Target: ${c.duration} ${c.unit}</div>
+          </div>`;
+        body.appendChild(row);
+      });
+
+      if (!isDone) {
+        const startBtn = document.createElement('button');
+        startBtn.className = 'btn btn-primary plan-start-btn';
+        startBtn.style.background = '#FF9500';
+        startBtn.textContent = isToday ? 'Log Cardio Session' : 'Log Cardio';
+        startBtn.onclick = () => loadCardioWorkout(options);
+        body.appendChild(startBtn);
+      } else {
+        const doneNote = document.createElement('div');
+        doneNote.className = 'plan-rest-label';
+        doneNote.textContent = '✓ Session logged for this day';
+        body.appendChild(doneNote);
+      }
+      card.appendChild(body);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+function loadPlanWorkout(exercises) {
+  sess = { exercises: [], cur: -1 };
+  exercises.forEach(ex => sess.exercises.push({ name: ex.name, sets: [] }));
+  sess.cur = 0;
+  switchView('workout');
+  document.getElementById('sec-start').style.display = 'none';
+  document.getElementById('sec-log').style.display   = 'block';
+  renderExPills();
+  renderExHeader();
+  applySuggestion();
+  renderSets();
+}
+
+function loadCardioWorkout(options) {
+  // Add cardio options to the exercise picker and open workout view
+  sess = { exercises: [], cur: -1 };
+  options.forEach(c => sess.exercises.push({ name: c.label + ' (cardio)', sets: [] }));
+  sess.cur = 0;
+  switchView('workout');
+  document.getElementById('sec-start').style.display = 'none';
+  document.getElementById('sec-log').style.display   = 'block';
+  renderExPills();
+  renderExHeader();
+  applySuggestion();
+  renderSets();
+}
+
+// ── Shared date/week helpers ─────────────────────────────────
 function getWeekNumber(d) {
   const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   const dayNum = date.getUTCDay() || 7;
@@ -1470,9 +2287,10 @@ function getWeekNumber(d) {
 
 function getWeekDates() {
   const today = new Date();
-  const dow = today.getDay(); // 0=Sun
+  const dow = today.getDay();
+  const daysFromMonday = (dow === 0) ? 6 : dow - 1;
   const monday = new Date(today);
-  monday.setDate(today.getDate() - dow); // week starts Sunday
+  monday.setDate(today.getDate() - daysFromMonday);
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(monday);
     d.setDate(monday.getDate() + i);
@@ -1494,169 +2312,12 @@ function getCurrentWeekKey() {
   return `${d.getFullYear()}_w${getWeekNumber(d)}`;
 }
 
-function planSuggestWeight(exName) {
-  // Returns { weight, basis } for the plan card suggestion
-  const last = getLastSessionSets(exName);
-  if (!last) return { weight: null, basis: 'No history yet' };
+// ── CARDIO in exercise library ───────────────────────────────
+// Add cardio entries to TIMED so they log duration (seconds/minutes)
+CARDIO_OPTIONS.forEach(c => TIMED.add(c.label + ' (cardio)'));
+// Add cardio to the exercise picker under its own category
+LIBRARY['Cardio'] = CARDIO_OPTIONS.map(c => c.label + ' (cardio)');
 
-  if (TIMED.has(exName)) {
-    const secs = (last[last.length - 1].seconds || 20) + 5;
-    return { weight: null, secs, basis: `Last: ${secs - 5}s → try ${secs}s` };
-  }
-  if (BANDED.has(exName)) {
-    const reps = (last[last.length - 1].reps || 12) + 1;
-    return { weight: null, reps, basis: `Last: ${reps - 1} reps → try ${reps}` };
-  }
-
-  const prevW = last[0].weight || 0;
-  const allOnTarget = last.every(s => (s.reps || 0) >= TARGET_REPS);
-  const suggestW = allOnTarget ? prevW + 5 : prevW;
-  const arrow = allOnTarget ? `↑ +5 ${S.unit}` : `= same`;
-  return {
-    weight: suggestW,
-    basis: `Last: ${prevW} ${S.unit} · ${arrow}`
-  };
-}
-
-function renderPlan() {
-  // Intention
-  const intentionKey = 'lift_intention_' + getCurrentWeekKey();
-  const saved = localStorage.getItem(intentionKey) || '';
-  document.getElementById('plan-intention-text').value = saved;
-
-  // Week range label
-  const dates = getWeekDates();
-  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  document.getElementById('plan-week-range').textContent =
-    `${fmt(dates[0])} – ${fmt(dates[6])}`;
-
-  // Build day cards
-  const plan = getCurrentWeekPlan();
-  const workoutDates = new Set(S.workouts.map(w => w.date));
-  const todayStr2 = todayStr();
-  const container = document.getElementById('plan-days');
-  container.innerHTML = '';
-
-  plan.forEach((day, i) => {
-    const dayDate = dates[i];
-    const ds = `${dayDate.getFullYear()}-${pad(dayDate.getMonth()+1)}-${pad(dayDate.getDate())}`;
-    const isToday = ds === todayStr2;
-    const isDone  = workoutDates.has(ds);
-    const isRest  = day.focus[0] === 'Rest';
-
-    const card = document.createElement('div');
-    card.className = 'plan-day-card' + (isToday && !isRest ? ' open' : '');
-
-    // Badge
-    let badgeHtml = '';
-    if (isDone && !isRest) {
-      badgeHtml = `<span class="plan-day-badge done-badge">✓ Done</span>`;
-    } else if (isToday) {
-      badgeHtml = `<span class="plan-day-badge today-badge">Today</span>`;
-    }
-
-    // Focus tags
-    const focusTags = isRest ? '' : day.focus.map(f =>
-      `<span class="plan-focus-tag">${f}</span>`).join('');
-
-    // Head
-    card.innerHTML = `
-      <div class="plan-day-head" onclick="this.parentElement.classList.toggle('open')">
-        <div style="flex:1">
-          <div class="plan-day-label">${day.label} <span style="font-weight:400;color:var(--muted);font-size:15px">${fmt(dayDate)}</span></div>
-          <div class="plan-day-sub">${isRest ? 'Rest & recover' : day.exercises.map(e => e.name.split('(')[0].trim()).join(', ')}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          ${badgeHtml}
-          ${!isRest ? '<span class="plan-day-chevron">›</span>' : ''}
-        </div>
-      </div>`;
-
-    if (!isRest) {
-      const body = document.createElement('div');
-      body.className = 'plan-day-body';
-
-      // Focus tags row
-      if (focusTags) {
-        const tagsDiv = document.createElement('div');
-        tagsDiv.style.paddingTop = '12px';
-        tagsDiv.innerHTML = focusTags;
-        body.appendChild(tagsDiv);
-      }
-
-      // Exercise rows
-      day.exercises.forEach(ex => {
-        const suggestion = planSuggestWeight(ex.name);
-        const row = document.createElement('div');
-        row.className = 'plan-ex-row';
-
-        let suggestHtml = '';
-        if (TIMED.has(ex.name)) {
-          suggestHtml = suggestion.secs
-            ? `<div class="plan-ex-suggest">${suggestion.secs}s</div>`
-            : `<div class="plan-ex-suggest" style="color:var(--muted)">—</div>`;
-        } else if (BANDED.has(ex.name)) {
-          suggestHtml = suggestion.reps
-            ? `<div class="plan-ex-suggest">${suggestion.reps} reps</div>`
-            : `<div class="plan-ex-suggest" style="color:var(--muted)">Start light</div>`;
-        } else {
-          suggestHtml = suggestion.weight !== null
-            ? `<div class="plan-ex-suggest">${suggestion.weight} ${S.unit}</div>`
-            : `<div class="plan-ex-suggest" style="color:var(--muted)">—</div>`;
-        }
-
-        row.innerHTML = `
-          <div style="flex:1">
-            <div class="plan-ex-name">${ex.name}</div>
-            <div class="plan-ex-target">${ex.sets} sets × ${ex.reps} reps${ex.note ? ' · ' + ex.note : ''}</div>
-          </div>
-          <div style="text-align:right;flex-shrink:0">
-            ${suggestHtml}
-            <div class="plan-ex-basis">${suggestion.basis}</div>
-          </div>`;
-        body.appendChild(row);
-      });
-
-      // Start workout button
-      if (!isDone) {
-        const startBtn = document.createElement('button');
-        startBtn.className = 'btn btn-primary plan-start-btn';
-        startBtn.textContent = isToday ? 'Start This Workout' : 'Load This Workout';
-        startBtn.onclick = () => loadPlanWorkout(day.exercises);
-        body.appendChild(startBtn);
-      } else {
-        const doneNote = document.createElement('div');
-        doneNote.className = 'plan-rest-label';
-        doneNote.textContent = '✓ Workout logged for this day';
-        body.appendChild(doneNote);
-      }
-
-      card.appendChild(body);
-    }
-
-    container.appendChild(card);
-  });
-}
-
-function loadPlanWorkout(exercises) {
-  // Pre-load the plan's exercises into session and switch to Workout tab
-  sess = { exercises: [], cur: -1 };
-
-  exercises.forEach(ex => {
-    sess.exercises.push({ name: ex.name, sets: [] });
-  });
-  sess.cur = 0;
-
-  switchView('workout');
-
-  document.getElementById('sec-start').style.display = 'none';
-  document.getElementById('sec-log').style.display   = 'block';
-
-  renderExPills();
-  renderExHeader();
-  applySuggestion();
-  renderSets();
-}
 
 // ============================================================
 // UTILITIES
@@ -1681,6 +2342,12 @@ loadState();
 // Sync unit buttons on load
 document.querySelectorAll('.unit-btn').forEach(b => b.classList.toggle('active', b.dataset.unit === S.unit));
 document.getElementById('lbl-weight').textContent = `Weight (${S.unit})`;
+// Apply any saved custom exercises and cardio into live data structures
+(function() {
+  const prefs = loadPrefs();
+  applyCustomLiftsToLibrary(prefs.customLifts || []);
+  applyCustomCardioToOptions(prefs.customCardio || []);
+})();
 // Pre-render plan intention textarea
 (function() {
   const key = 'lift_intention_' + getCurrentWeekKey();
